@@ -27,19 +27,19 @@ Function Set-Shortcut
 		[System.String]$Description = $null
 	)
 	
-  # File name without relative or absolute path
+	# File name without relative or absolute path
 	If ( -not (Split-Path $Name) )
 	{
 		$Name = Join-Path (Get-Location) $Name
 	}
   
-  # Wscript.Shell doesn't share pwd with Powershell, so resolve `.\` to absolute path if it was used
+	# Wscript.Shell doesn't share pwd with Powershell, so resolve `.\` to absolute path if it was used
 	Else
 	{
 		$Name = Join-Path (Resolve-Path (Split-Path $Name)) $Name
 	}
 	
-  # If .lnk exists, it will grab current properties
+	# If .lnk exists, it will grab current properties
 	$WscShell = New-Object -comObject WScript.Shell
 	$Shortcut = $WscShell.CreateShortcut($Name)
 	
@@ -58,7 +58,7 @@ Function Set-Shortcut
 		Description	     = $Description
 	}
 	
-  # Only update properties that were specified in cmdlet arguments
+	# Only update properties that were specified in cmdlet arguments
 	ForEach ( $Attribute in $Attributes.Keys ) {
 		If ( $Attributes.$Attribute )
 		{
